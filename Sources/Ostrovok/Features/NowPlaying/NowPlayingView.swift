@@ -20,7 +20,7 @@ struct NowPlayingView: View {
                         .lineLimit(1)
                 }
 
-                ProgressBar(value: model.position, duration: snapshot.duration) { fraction in
+                ProgressBar(value: model.position, duration: snapshot.duration, tint: model.palette.primaryColor) { fraction in
                     model.seek(toFraction: fraction)
                 }
 
@@ -75,14 +75,15 @@ struct NowPlayingView: View {
 struct ProgressBar: View {
     let value: Double
     let duration: Double
+    var tint: Color = .white
     let onSeek: (Double) -> Void
 
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
-                Capsule().fill(Color.white.opacity(0.2))
+                Capsule().fill(tint.opacity(0.2))
                 Capsule()
-                    .fill(Color.white)
+                    .fill(tint)
                     .frame(width: max(0, geo.size.width * fraction))
             }
             .contentShape(Rectangle())

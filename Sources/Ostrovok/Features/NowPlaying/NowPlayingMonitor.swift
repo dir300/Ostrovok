@@ -12,6 +12,7 @@ final class NowPlayingMonitor: ObservableObject, Feature {
 
     @Published private(set) var snapshot: MediaSnapshot?
     @Published private(set) var artwork: NSImage?
+    @Published private(set) var palette: ArtworkPalette = .fallback
     @Published private(set) var position: Double = 0
     @Published private(set) var automationDenied = false
 
@@ -91,6 +92,7 @@ final class NowPlayingMonitor: ObservableObject, Feature {
                 artwork = nil
                 artworkTrackID = nil
                 position = 0
+                palette = .fallback
             }
             return
         }
@@ -115,6 +117,7 @@ final class NowPlayingMonitor: ObservableObject, Feature {
         artworkTrackID = snap.trackID
         if let cached = artworkCache[snap.trackID] {
             artwork = cached
+            palette = PaletteExtractor.palette(from: cached)
             return
         }
         artwork = nil
@@ -140,6 +143,7 @@ final class NowPlayingMonitor: ObservableObject, Feature {
         if artworkCache.count > 24 { artworkCache.removeAll() }
         artworkCache[trackID] = image
         artwork = image
+        palette = PaletteExtractor.palette(from: image)
     }
 
     // MARK: - Controls

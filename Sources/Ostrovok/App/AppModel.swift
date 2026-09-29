@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import Sparkle
 
 /// Root object. Owns every feature and shared service, and exposes the ordered
 /// feature list that the island tab bar renders.
@@ -19,6 +20,8 @@ final class AppModel: ObservableObject {
 
     // Non-tab shared services.
     let hud = SystemHUDMonitor()
+    let mediaKeys: MediaKeyController
+    let updaterController: SPUStandardUpdaterController
 
     /// The feature whose expanded view is currently selected.
     @Published var selectedFeatureID: String
@@ -46,6 +49,12 @@ final class AppModel: ObservableObject {
     init() {
         settings = Settings(defaultEnabledFeatures: Set(Self.featureIDs))
         selectedFeatureID = nowPlaying.id
+        mediaKeys = MediaKeyController(hud: hud, settings: settings)
+        updaterController = SPUStandardUpdaterController(
+            startingUpdater: true,
+            updaterDelegate: nil,
+            userDriverDelegate: nil
+        )
 
         // Forward settings changes so SwiftUI views observing `app` re-render
         // when sizes / feature visibility change (Settings is a nested object).
@@ -68,5 +77,9 @@ final class AppModel: ObservableObject {
             settingsWindow = SettingsWindowController(app: self)
         }
         settingsWindow?.show()
+    }
+
+    func checkForUpdates() {
+        updaterController.checkForUpdates(nil)
     }
 }

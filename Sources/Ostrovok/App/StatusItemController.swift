@@ -34,6 +34,10 @@ final class StatusItemController: NSObject {
         let settings = NSMenuItem(title: L10n.text("menu.settings", lang), action: #selector(openSettings), keyEquivalent: ",")
         settings.target = self
         menu.addItem(settings)
+
+        let checkUpdates = NSMenuItem(title: L10n.text("menu.checkUpdates", lang), action: #selector(checkForUpdates), keyEquivalent: "")
+        checkUpdates.target = self
+        menu.addItem(checkUpdates)
         menu.addItem(.separator())
 
         let showHUD = NSMenuItem(
@@ -74,6 +78,10 @@ final class StatusItemController: NSObject {
 
     @objc private func openSettings() {
         app.openSettings()
+    }
+
+    @objc private func checkForUpdates() {
+        app.checkForUpdates()
     }
 
     @objc private func toggleShowHUD() {

@@ -50,7 +50,7 @@ open build/Ostrovok.app
 
 - **Language** — русский / English / 中文 (по умолчанию английский).
 - **Features** — включать/выключать табы.
-- **Behavior** — «Hide island until hover», «Expand on hover», HUD.
+- **Behavior** — «Hide island until hover», «Expand on hover», HUD, перехват медиа-клавиш, автозапуск.
 - **Displays** — показывать на экране с чёлкой / имитировать на внешних.
 - **Sizes** — ширина/высота развёрнутого островка, ширина «ушек», высота пилюли.
 
@@ -75,6 +75,11 @@ Sources/Ostrovok/
     IslandController.swift    hover + click-through на один экран
     DisplayManager.swift      по одному островку на экран + общий таймер мыши
     SystemHUDMonitor.swift    громкость (CoreAudio) + яркость (DisplayServices)
+    AudioVolume.swift         громкость: чтение/запись (CoreAudio)
+    DisplayBrightness.swift   яркость: чтение/запись (DisplayServices)
+    MediaKeyTap.swift         event tap медиа-клавиш
+    MediaKeyController.swift  применяет громкость/яркость + скрытие нативного HUD
+    LoginItem.swift           автозапуск (SMAppService)
   UI/
     NotchShape.swift          squircle + вогнутые «крылья»
     IslandView.swift          корневая вью: compact / expanded / HUD + таб-бар
@@ -103,16 +108,27 @@ Sources/Ostrovok/
 
 1. Создай `final class MyFeature: ObservableObject, Feature`
    (см. `Features/Battery/BatteryMonitor.swift`).
-2. Реализуй `expandedView` / `compactLeadingView` / `compactTrailingView`.
+2. Реализуй `expandedView`.
 3. Зарегистрируй в `AppModel` (массив `features` + `featureIDs`).
 
 ## Roadmap до релиза
 
 - [x] Иконка приложения (`.icns`).
 - [x] Окно настроек, скрытие до наведения, настраиваемые размеры, локализация.
-- [ ] Автозапуск (`SMAppService`) и автообновления (Sparkle).
-- [ ] Полный HUD: event tap для скрытия нативного HUD (см. `islet/MediaKeyTap.swift`, MIT).
-- [ ] Арт-палитра из обложки (см. `islet/ArtworkPalette.swift`, MIT).
+- [x] Автозапуск (`SMAppService`) и автообновления (Sparkle).
+- [x] Полный HUD: event tap для скрытия нативного HUD.
+- [x] Арт-палитра из обложки.
+
+## Обновления (Sparkle)
+
+Sparkle встроен (SPM) и добавлен пункт «Check for Updates…» в меню-бар. Чтобы
+обновления реально заработали, нужно:
+
+1. Сгенерировать ключи EdDSA (`Sparkle/bin/generate_keys`) и добавить
+   `SUPublicEDKey` в `Resources/Info.plist`.
+2. Сгенерировать appcast (`generate_appcast`) и выложить его по адресу из
+   `SUFeedURL` в `Info.plist` (сейчас там плейсхолдер GitHub Releases).
+3. Подписывать релизы Developer ID — без подписи Sparkle не проверит обновление.
 
 ## Лицензия
 

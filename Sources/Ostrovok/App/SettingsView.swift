@@ -70,9 +70,21 @@ struct SettingsView: View {
             Toggle(t("settings.hideUntilHover"), isOn: $settings.hideUntilHover)
             Toggle(t("settings.expandOnHover"), isOn: $settings.expandOnHover)
             Toggle(t("settings.showHUD"), isOn: $settings.showSystemHUD)
+            Toggle(t("settings.interceptMediaKeys"), isOn: $settings.interceptMediaKeys)
+            Toggle(t("settings.launchAtLogin"), isOn: launchAtLoginBinding)
         }
         .toggleStyle(.switch)
         .controlSize(.small)
+    }
+
+    private var launchAtLoginBinding: Binding<Bool> {
+        Binding(
+            get: { settings.launchAtLogin },
+            set: { newValue in
+                settings.launchAtLogin = newValue
+                LoginItem.setEnabled(newValue)
+            }
+        )
     }
 
     // MARK: - Displays

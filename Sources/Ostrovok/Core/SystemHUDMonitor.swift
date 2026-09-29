@@ -142,6 +142,14 @@ final class SystemHUDMonitor {
         }
     }
 
+    /// Emit brightness immediately — used when we change it ourselves (media keys),
+    /// so the HUD bar doesn't wait for the next sample.
+    func emitBrightness(value: Double, displayID: CGDirectDisplayID) {
+        lastBrightness[displayID] = value
+        accelerationRemaining = Self.accelerationTicks
+        events.send(HUDEvent(kind: .brightness, value: value, muted: false, displayID: displayID))
+    }
+
     // MARK: - Raw CoreAudio
 
     private static var volumeAddress = AudioObjectPropertyAddress(

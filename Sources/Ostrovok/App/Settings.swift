@@ -31,6 +31,15 @@ final class Settings: ObservableObject {
     @Published var showSystemHUD: Bool {
         didSet { defaults.set(showSystemHUD, forKey: "showSystemHUD") }
     }
+    /// Launch the app automatically at login.
+    @Published var launchAtLogin: Bool {
+        didSet { defaults.set(launchAtLogin, forKey: "launchAtLogin") }
+    }
+    /// Intercept the media keys and replace the native volume/brightness HUD
+    /// (requires Accessibility permission).
+    @Published var interceptMediaKeys: Bool {
+        didSet { defaults.set(interceptMediaKeys, forKey: "interceptMediaKeys") }
+    }
 
     // MARK: - Displays
 
@@ -70,6 +79,8 @@ final class Settings: ObservableObject {
         hideUntilHover = defaults.object(forKey: "hideUntilHover") as? Bool ?? true
         expandOnHover = defaults.object(forKey: "expandOnHover") as? Bool ?? true
         showSystemHUD = defaults.object(forKey: "showSystemHUD") as? Bool ?? true
+        launchAtLogin = defaults.object(forKey: "launchAtLogin") as? Bool ?? false
+        interceptMediaKeys = defaults.object(forKey: "interceptMediaKeys") as? Bool ?? false
         showOnNotchedScreen = defaults.object(forKey: "showOnNotchedScreen") as? Bool ?? true
         simulateOnExternal = defaults.object(forKey: "simulateOnExternal") as? Bool ?? true
         expandedWidth = defaults.object(forKey: "expandedWidth") as? Double ?? 360

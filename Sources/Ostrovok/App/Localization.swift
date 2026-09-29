@@ -90,5 +90,16 @@ enum L10n {
             .russian: "Нет включённых функций.\nВключите хотя бы одну в настройках.",
             .chinese: "未启用任何功能。\n请在设置中至少启用一个。",
         ],
+
+        // Behavior (extra)
+        "settings.launchAtLogin": [.english: "Launch at login", .russian: "Запускать при входе", .chinese: "登录时启动"],
+        "settings.interceptMediaKeys": [
+            .english: "Intercept media keys (replace native HUD)",
+            .russian: "Перехватывать медиа-клавиши (заменить нативный HUD)",
+            .chinese: "拦截媒体键（替换系统提示）",
+        ],
+
+        // Menu
+        "menu.checkUpdates": [.english: "Check for Updates…", .russian: "Проверить обновления…", .chinese: "检查更新…"],
     ]
 }

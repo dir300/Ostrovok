@@ -11,8 +11,13 @@
 - **Clipboard** — text history with copy-back.
 - **Battery** — IOKit power-source monitoring.
 - **HUD** — volume (CoreAudio) and brightness (private `DisplayServices`).
+- **Full HUD** — media-key event tap (Accessibility) to replace the native
+  volume/brightness HUD.
 - **Timer** — pomodoro countdown.
 - **Shelf** — drag & drop file shelf (drop onto island, drag out, reveal in Finder).
+- **Artwork palette** — accent colors extracted from album artwork.
+- **Launch at login** — `SMAppService`.
+- **Auto-updates** — Sparkle (SPM), with a "Check for Updates…" menu item.
 - **Settings window** — language (English / Русский / 中文, default English),
   feature visibility, behavior, displays, sizes.
 - **Hide-until-hover** — island stays invisible until the cursor hovers over it.
